@@ -19,8 +19,8 @@ resource "google_billing_budget" "employee_sandbox" {
   for_each        = local.employee_map
   billing_account = var.billing_account_id
 
-  depends_on = [google_project_service.management_billingbudgets]
-  display_name    = "${each.value.prefix} Sandbox Budget"
+  depends_on   = [google_project_service.management_billingbudgets]
+  display_name = "${each.value.prefix} Sandbox Budget"
 
   budget_filter {
     calendar_period = "MONTH"

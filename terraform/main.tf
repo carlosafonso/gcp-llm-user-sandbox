@@ -12,8 +12,9 @@ provider "google" {
 }
 
 resource "google_folder" "sandbox_root" {
-  display_name = var.sandbox_folder_name
-  parent       = var.parent_folder_id
+  display_name        = var.sandbox_folder_name
+  parent              = var.parent_folder_id
+  deletion_protection = var.force_destroy ? false : true
 }
 
 resource "random_id" "mgmt_project_suffix" {
@@ -25,4 +26,5 @@ resource "google_project" "management" {
   project_id      = "mgmt-obs-${random_id.mgmt_project_suffix.hex}"
   folder_id       = google_folder.sandbox_root.name
   billing_account = var.billing_account_id
+  deletion_policy = var.force_destroy ? "DELETE" : "PREVENT"
 }
